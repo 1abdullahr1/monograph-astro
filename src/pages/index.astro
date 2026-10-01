@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Tag from '../components/Tag.astro';
+import Stamp from '../components/Stamp.astro';
+import Input from '../components/Input.astro';
+
+const notes = [
+  {
+    index: '01', title: 'Paper, not gray-on-white',
+    body: 'Warm off-white #FAF7F0 replaces the sterile #FAFAFA every template ships. The page feels printed, not rendered.',
+  },
+  {
+    index: '02', title: 'Hairlines over glows',
+    body: 'Hierarchy is carried by 1px rules and numbering. No blurred shadows, no 0.5px glows, no glassmorphism.',
+  },
+  {
+    index: '03', title: 'One loud accent',
+    body: 'The signal color appears only on stamps, index numbers and tags. Restraint is what makes it loud.',
+  },
+  {
+    index: '04', title: 'Printed depth',
+    body: 'Shadows are solid 5px offsets in ink, like letterpress. Hover lifts the card; it does not blur.',
+  },
+];
+
+const principles = [
+  'No gradients. Ever.',
+  'No emoji icons. Typography and layout carry meaning.',
+  'Body text never drops below 16px, even on mobile.',
+  'Corners are tight: 6–12px radius, nothing pill-shaped by default.',
+  'Every section is numbered like an annual report.',
+];
+---
+
+<Base title="Monograph — a paper-and-ink design system">
+  <Nav />
+
+  <p class="mono-label" style="margin-top:48px">Design system · v1.0 · <Stamp /></p>
+  <h1>Considered interfaces,<br />printed on the web.</h1>
+  <p>
+    Monograph is a paper-and-ink design system: hairlines instead of glows, one loud accent,
+    hard offset shadows, and mono index numbers like an annual report. It is deliberately
+    anti-template — remove the logo and it still reads as itself.
+  </p>
+
+  <p>
+    <Button href="#manifesto">Read the manifesto</Button>
+    &nbsp;
+    <Button href="#contact" variant="ghost">Correspondence</Button>
+    &nbsp;
+    <Tag label="Anti-template" />
+  </p>
+
+  <SectionHead no="01" title="Manifesto" />
+  <p id="manifesto">
+    Most of the web now looks like it was poured from the same mold: purple gradients, rounded
+    cards, soft shadows, a centered hero with a blob illustration. Monograph refuses the mold.
+    It borrows its rules from print — margins, folios, rules, and a single spot color — because
+    print has spent five centuries learning how to make pages that hold attention.
+  </p>
+  <p>
+    {principles.map((p) => <><span class="mono-label" style="color: var(--signal)">— </span>{p}<br /></>)}
+  </p>
+
+  <SectionHead no="02" title="Field notes" />
+  <div id="notes" style="display:grid; gap:24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    {notes.map((n) => <Card {...n} />)}
+  </div>
+
+  <SectionHead no="03" title="Correspondence" />
+  <form id="contact" style="max-width:440px" action="#" method="post">
+    <Input id="name" label="Name" placeholder="Ada Lovelace" required />
+    <br /><br />
+    <Input id="email" label="Email" type="email" placeholder="ada@analytical.engine" required />
+    <br /><br />
+    <Input id="message" label="Message" placeholder="Dear Monograph…" />
+    <br /><br />
+    <Button type="submit">Send the letter</Button>
+  </form>
+
+  <hr class="hairline" />
+  <p class="mono-label">
+    Set in Fraunces, Inter & IBM Plex Mono · No gradients were used ·
+    № MMXXVI
+  </p>
+</Base>

@@ -1,0 +1,25 @@
+---
+import '../styles/monograph.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Monograph — a paper-and-ink design system, printed on the web.' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+</head>
+<body>
+  <div class="wrap">
+    <slot />
+  </div>
+</body>
+</html>

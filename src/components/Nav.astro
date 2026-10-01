@@ -1,0 +1,21 @@
+---
+interface Link { label: string; href: string; no: string; }
+interface Props { brand?: string; links?: Link[]; }
+
+const {
+  brand = 'Monograph',
+  links = [
+    { no: '01', label: 'Manifesto', href: '#manifesto' },
+    { no: '02', label: 'Field notes', href: '#notes' },
+    { no: '03', label: 'Correspondence', href: '#contact' },
+  ],
+} = Astro.props;
+---
+
+<nav class="nav">
+  <a class="brand" href="/">{brand}</a>
+  <span class="spacer"></span>
+  {links.map((l) => (
+    <a href={l.href}><span class="no">{l.no}</span>{l.label}</a>
+  ))}
+</nav>

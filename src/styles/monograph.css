@@ -1,0 +1,196 @@
+/* ============================================================
+   MONOGRAPH — anti-template design system v1.0
+   Paper · Ink · One loud accent. Print-born, web-sharp.
+   ============================================================ */
+
+/* ---------- 0. Fonts (swap for self-hosted if you prefer) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ---------- 1. Design tokens ---------- */
+:root {
+  /* Color — light (paper) */
+  --paper:        #FAF7F0;
+  --ink:          #17140E;
+  --smoke:        #8A8578;
+  --rule:         #D9D2C4;
+  --signal:       #E8490F;   /* the one loud accent */
+  --signal-ink:   #FFFFFF;   /* text on signal fills */
+
+  /* Accent alternatives — swap in one line */
+  /* --signal: #B4E33D; --signal-ink:#17140E; */  /* Acid  */
+  /* --signal: #2B3FE0; --signal-ink:#FFFFFF; */  /* Cobalt */
+
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body:    "Inter", -apple-system, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  --fs-hero:   2.5rem;    /* 40 */
+  --fs-h2:     1.5rem;    /* 24 */
+  --fs-h3:     1.25rem;   /* 20 */
+  --fs-body:   1rem;      /* 16 — never smaller on mobile */
+  --fs-small:  0.875rem;  /* 14 */
+  --fs-label:  0.75rem;   /* 12 — mono labels only */
+
+  /* Spacing — the 4pt press bed */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px;
+  --s-4: 16px; --s-6: 24px; --s-8: 32px;
+
+  /* Radius — tight, deliberate */
+  --r-chip: 6px; --r-btn: 10px; --r-card: 12px;
+
+  /* Depth — printed, not blurred */
+  --shadow-press: 5px 5px 0 var(--ink);
+  --shadow-press-sm: 3px 3px 0 var(--ink);
+  --hairline: 1px solid var(--rule);
+  --border-ink: 1px solid var(--ink);
+
+  --ease-snap: cubic-bezier(.2,.9,.3,1);
+  --t-fast: 120ms;
+}
+
+/* Dark mode — ink paper, warm black */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #16130E;
+    --ink:    #F2EDE3;
+    --smoke:  #9A9484;
+    --rule:   #3A352B;
+    --signal: #FF5A1F;
+  }
+}
+
+/* ---------- 2. Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.15; margin: 0 0 var(--s-4); }
+h1 { font-size: var(--fs-hero); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+p  { margin: 0 0 var(--s-4); max-width: 65ch; }
+a  { color: var(--ink); text-decoration: underline; text-decoration-color: var(--signal); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { background: var(--signal); color: var(--signal-ink); text-decoration: none; }
+::selection { background: var(--signal); color: var(--signal-ink); }
+
+/* Mono label — index numbers, metadata, captions */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--smoke);
+  letter-spacing: 0.02em;
+}
+
+/* Hairline divider */
+.hairline { border: none; border-top: var(--hairline); margin: var(--s-6) 0; }
+
+/* Numbered section head — "№ 01 · Color" */
+.section-head {
+  display: flex; align-items: baseline; gap: var(--s-3);
+  border-top: var(--hairline);
+  padding-top: var(--s-3);
+  margin: var(--s-8) 0 var(--s-4);
+}
+.section-head .no { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--signal); }
+.section-head .t { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--smoke); }
+
+/* ---------- 3. Components ---------- */
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: var(--r-btn);
+  border: var(--border-ink);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--t-fast) var(--ease-snap), box-shadow var(--t-fast) var(--ease-snap);
+}
+.btn--primary { background: var(--ink); color: var(--paper); }
+.btn--ghost   { background: transparent; color: var(--ink); }
+.btn--primary:hover, .btn--ghost:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-press-sm);
+  text-decoration: none;
+}
+.btn--primary:active, .btn--ghost:active { transform: translate(0,0); box-shadow: none; }
+
+/* Tag — accent outline chip */
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--signal);
+  border: 1px solid var(--signal);
+  border-radius: var(--r-chip);
+  padding: 3px 10px;
+}
+
+/* Stamp — rotated proof badge */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--signal);
+  border: 1.5px solid var(--signal);
+  border-radius: var(--r-chip);
+  padding: 6px 12px;
+  transform: rotate(-4deg);
+}
+
+/* Card — hairline frame, printed shadow */
+.card {
+  background: var(--paper);
+  border: var(--border-ink);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-press);
+  padding: var(--s-6);
+  max-width: 480px;
+  transition: transform var(--t-fast) var(--ease-snap), box-shadow var(--t-fast) var(--ease-snap);
+}
+.card:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
+.card .index { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--signal); }
+.card h3 { margin: var(--s-2) 0 var(--s-2); }
+.card p  { font-size: var(--fs-small); color: var(--smoke); margin: 0; }
+
+/* Input — paper field with ink underline feel */
+.input {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--ink);
+  background: transparent;
+  border: var(--border-ink);
+  border-radius: var(--r-btn);
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+}
+.input::placeholder { color: var(--smoke); }
+.input:focus { box-shadow: var(--shadow-press-sm); transform: translate(-2px,-2px); }
+label.mono-label { display: block; margin-bottom: var(--s-2); }
+
+/* Nav — editorial index, not a hamburger-by-default */
+.nav {
+  display: flex; align-items: baseline; gap: var(--s-6);
+  border-bottom: var(--hairline);
+  padding: var(--s-4) 0;
+}
+.nav .brand { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h3); text-decoration: none; }
+.nav .spacer { flex: 1; }
+.nav a { font-size: var(--fs-small); text-decoration: none; color: var(--ink); }
+.nav a .no { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--signal); margin-right: 4px; }
+.nav a:hover { background: none; color: var(--signal); }
+
+/* Layout helper */
+.wrap { max-width: 880px; margin: 0 auto; padding: var(--s-6) var(--s-4); }

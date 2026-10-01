@@ -1,0 +1,14 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  type?: string;
+  placeholder?: string;
+  name?: string;
+  required?: boolean;
+}
+const { id, label, type = 'text', placeholder = '', name = id, required = false } = Astro.props;
+---
+
+<label class="mono-label" for={id}>{label}</label>
+<input class="input" id={id} name={name} type={type} placeholder={placeholder} required={required} />
